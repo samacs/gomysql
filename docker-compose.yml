@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  gomysql:
+    build: .
+    restart: always
+    depends_on:
+      - mysql
+    env_file:
+      - .env
+
+  mysql:
+    image: mysql:latest
+    hostname: mysql
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MYSQL_USER: ${MYSQL_USER:-gomysql}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-gomysql}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-gomysql}
+
